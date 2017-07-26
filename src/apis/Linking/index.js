@@ -56,9 +56,10 @@ const iframeOpen = url => {
     if (iframeBody) {
       const script = iframeDoc.createElement('script');
       const openerExpression = noOpener ? 'child.opener = null' : '';
+      const mailToExpression = noOpener === false ? '_top' : '';
       script.text = `
         window.parent = null; window.top = null; window.frameElement = null;
-        var child = window.open("${url}"); ${openerExpression};
+        var child = window.open("${url}", "${mailToExpression}"); ${openerExpression};
       `;
       iframeBody.appendChild(script);
     }
