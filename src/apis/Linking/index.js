@@ -35,9 +35,10 @@ const iframeOpen = url => {
 
   const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
   const script = iframeDoc.createElement('script');
+  const mailToExpression = noOpener === false ? '_top' : '';
   script.text = `
     window.parent = null; window.top = null; window.frameElement = null;
-    var child = window.open("${url}"); ${noOpener && 'child.opener = null'};
+    var child = window.open("${url}", "${mailToExpression}"); ${noOpener && 'child.opener = null'};
   `;
   iframeDoc.body.appendChild(script);
   document.body.removeChild(iframe);
